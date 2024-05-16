@@ -1,5 +1,6 @@
 package com.example.getInline.dto;
 
+import com.example.getInline.constant.ErrorCode;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,15 +8,15 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class APIDateResponse extends APIErrorResponse{
-    private final Object data;
+public class APIDateResponse<T> extends APIErrorResponse{
+    private final T data;
 
-    private APIDateResponse(boolean success, Integer errorCode, String message, Object data) {
-        super(success, errorCode, message);
+    private APIDateResponse(T data) {
+        super(true, ErrorCode.OK.getCode(), ErrorCode.OK.getMessage());
         this.data = data;
     }
 
-    public static APIDateResponse of(boolean success, Integer errorCode, String message, Object data) {
-        return new APIDateResponse(success, errorCode, message, data);
+    public static <T> APIDateResponse<T> of(T data) {
+        return new APIDateResponse(data);
     }
 }
