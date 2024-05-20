@@ -1,5 +1,10 @@
 package com.example.getInline.controller.api;
 
+import com.example.getInline.constant.PlaceType;
+import com.example.getInline.domain.Place;
+import com.example.getInline.dto.APIDateResponse;
+import com.example.getInline.dto.PlaceDTO;
+import com.example.getInline.dto.PlaceResponse;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class APIPlaceController {
 
     @GetMapping("/places")
-    public List<String> getPlaces() {
-        return List.of("place1","place2");
+    public APIDateResponse<List<PlaceResponse>> getPlaces() {
+        return APIDateResponse.of(List.of(PlaceResponse.of(PlaceType.COMMON,
+                "필라배드민턴장",
+                "서울시 강남구",
+                "010-1234-5678",
+                30,
+                "신장개업")));
     }
 
     @PostMapping("/places")
@@ -24,8 +34,16 @@ public class APIPlaceController {
     }
 
     @GetMapping("/places/{placeId}")
-    public String getPlace(@PathVariable Integer placeId) {
-        return "event " + placeId;
+    public APIDateResponse<PlaceDTO> getPlace(@PathVariable Integer placeId) {
+        if (placeId.equals(2)) {
+            return APIDateResponse.of(null);
+        }
+        return APIDateResponse.of(PlaceDTO.of(PlaceType.COMMON,
+                "필라배드민턴장",
+                "서울시 강남구",
+                "010-1234-5678",
+                30,
+                "신장개업"));
     }
 
     @PutMapping("/places/{placeId}")

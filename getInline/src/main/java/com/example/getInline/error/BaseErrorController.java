@@ -26,7 +26,7 @@ public class BaseErrorController implements ErrorController {
         );
     }
 
-    @RequestMapping ("/error")
+    @RequestMapping
     public ResponseEntity<APIErrorResponse> error(HttpServletResponse response) {
         HttpStatus status = HttpStatus.valueOf(response.getStatus());
         ErrorCode errorCode = status.is4xxClientError() ? ErrorCode.BAD_REQUEST : ErrorCode.INTERNAL_ERROR;
