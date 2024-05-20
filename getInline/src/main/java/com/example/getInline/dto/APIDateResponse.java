@@ -17,6 +17,10 @@ public class APIDateResponse<T> extends APIErrorResponse{
     }
 
     public static <T> APIDateResponse<T> of(T data) {
-        return new APIDateResponse(data);
+        return new APIDateResponse<>(data);
+    }
+
+    public static <T> APIDateResponse<T> empty() {
+        return new APIDateResponse<>(null);
     }
 }
