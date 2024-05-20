@@ -2,14 +2,14 @@ package com.example.getInline.error;
 
 import com.example.getInline.constant.ErrorCode;
 import com.example.getInline.exception.GeneralException;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
 public class BaseExceptionHandler {
@@ -30,6 +30,10 @@ public class BaseExceptionHandler {
     public ModelAndView exception(Exception e) {
         ErrorCode errorCode = ErrorCode.INTERNAL_ERROR;
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        if(e instanceof NoResourceFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        }
 
         return new ModelAndView("error", Map.of(
                 "statusCode", status.value(),
